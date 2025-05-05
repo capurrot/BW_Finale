@@ -2,6 +2,8 @@ package it.epicode.bw.finale.fatture;
 
 import it.epicode.bw.finale.auth.AppUser;
 import it.epicode.bw.finale.auth.Role;
+import it.epicode.bw.finale.clienti.ClienteRepository;
+import it.epicode.bw.finale.clienti.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,12 @@ public class FatturaService {
     @Autowired
     private FatturaRepository fatturaRepository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ClienteService clienteService;
+
     //inserire anche clienteRepository una volta fatta
 
     private Fattura toEntity(FatturaRequest request){
@@ -27,7 +35,7 @@ public class FatturaService {
         fattura.setData(request.getData());
         fattura.setNumero(request.getNumero());
         fattura.setImporto(request.getImporto());
-        //da inserire la ricerca dell'id del cliente dalla repo cliente
+        fattura.setCliente(clienteRepository.findById(request.getClienteId()).orElseThrow());
         fattura.setStato(request.getStato());
         return fattura;
     }
@@ -38,8 +46,7 @@ public class FatturaService {
                 fattura.getData(),
                 fattura.getImporto(),
                 fattura.getNumero(),
-                // per ora mettiamo null sul cliente:
-                fattura.getCliente() != null ? fattura.getCliente().getId() : null,
+                fattura.getCliente().getId(),
                 fattura.getStato()
         );
     }
