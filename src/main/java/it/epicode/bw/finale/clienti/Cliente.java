@@ -28,7 +28,7 @@ public class Cliente {
     @Column(unique = true, nullable = false, length = 100)
     private String email;
 
-    private LocalDate dataInserimento;
+    private LocalDate dataInserimento = LocalDate.now();
     private LocalDate dataUltimoContatto;
     private double fatturatoAnnuale;
 
