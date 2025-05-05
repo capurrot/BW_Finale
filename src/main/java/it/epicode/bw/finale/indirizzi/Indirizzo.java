@@ -1,5 +1,6 @@
 package it.epicode.bw.finale.indirizzi;
 
+import it.epicode.bw.finale.clienti.Cliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +10,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "indirizzi")
+@Table(
+        name = "indirizzi",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"cliente_id", "tipoSede"})
+        }
+)
+
 
 public class Indirizzo {
     @Id
@@ -19,6 +26,12 @@ public class Indirizzo {
     private String civico;
     private String cap;
     private String localita;
+    @Enumerated(EnumType.STRING)
+    private TipoSede tipoSede;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name="comune_id")
