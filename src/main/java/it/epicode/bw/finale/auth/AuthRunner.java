@@ -50,17 +50,19 @@ public class AuthRunner implements ApplicationRunner {
         if (appUserRepository.count() <= 1) {
 
             for (int i = 0; i < 10; i++) {
+                String nome = faker.name().firstName();
+                String cognome = faker.name().lastName();
                 AppUser appUser = new AppUser();
-                appUser.setUsername(faker.name().username());
+                appUser.setUsername(nome + " " + cognome);
                 appUser.setPassword(passwordEncoder.encode("userpwd"));
                 appUser.setRoles(Set.of(Role.ROLE_USER));
                 appUserRepository.save(appUser);
                 Utente utente = new Utente();
                 utente.setAppUser(appUser);
                 utente.setId(appUser.getId());
-                utente.setNome(faker.name().firstName());
-                utente.setCognome(faker.name().lastName());
-                utente.setEmail(faker.internet().emailAddress());
+                utente.setNome(nome);
+                utente.setCognome(cognome);
+                utente.setEmail(nome + cognome + "@gmail.com");
                 utente.setAvatar("https://ui-avatars.com/api/?name=" + utente.getNome() + "+" + utente.getCognome());
                 utenteService.save(utente);
             }
