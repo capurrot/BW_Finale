@@ -16,9 +16,7 @@ public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String username;
     private String email;
-    private String password;
     private String nome;
     private String cognome;
     private String avatar;

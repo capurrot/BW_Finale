@@ -1,5 +1,8 @@
 package it.epicode.bw.finale.auth;
 
+import it.epicode.bw.finale.utenti.Utente;
+import it.epicode.bw.finale.utenti.UtenteRepository;
+import it.epicode.bw.finale.utenti.UtenteService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,17 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthController {
 
     private final AppUserService appUserService;
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/current-user")
     public AppUser getCurrentUser(@AuthenticationPrincipal AppUser appUser) {
@@ -53,4 +57,5 @@ public class AuthController {
         );
         return ResponseEntity.ok(new AuthResponse(token));
     }
+
 }
