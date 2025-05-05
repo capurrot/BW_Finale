@@ -19,7 +19,6 @@ public class Provincia {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Long id;
     private String nome;
-
     private String sigla;
 
     @OneToMany(mappedBy = "provincia")
