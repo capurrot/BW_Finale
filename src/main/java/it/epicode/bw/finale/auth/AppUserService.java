@@ -1,7 +1,12 @@
 package it.epicode.bw.finale.auth;
 
+import it.epicode.bw.finale.common.EmailSenderService;
+import it.epicode.bw.finale.utenti.Utente;
+import it.epicode.bw.finale.utenti.UtenteRepository;
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,17 +33,30 @@ public class AppUserService {
 
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private UtenteRepository utenteRepository;
+    @Autowired
+    private EmailSenderService emailSenderService;
 
-    public AppUser registerUser(String username, String password, Set<Role> roles) {
-        if (appUserRepository.existsByUsername(username)) {
+    public AppUser registerUser(RegisterRequest request, Set<Role> roles) throws MessagingException {
+        if (appUserRepository.existsByUsername(request.getUsername())) {
             throw new EntityExistsException("Username già in uso");
         }
 
         AppUser appUser = new AppUser();
-        appUser.setUsername(username);
-        appUser.setPassword(passwordEncoder.encode(password));
+        appUser.setUsername(request.getUsername());
+        appUser.setPassword(passwordEncoder.encode(request.getPassword()));
         appUser.setRoles(roles);
-        return appUserRepository.save(appUser);
+
+        Utente dipendente = new Utente();
+        BeanUtils.copyProperties(request, dipendente);
+
+        dipendente.setAppUser(appUser);
+        utenteRepository.save(dipendente);
+        emailSenderService.sendEmail(request.getEmail(), "Benvenuto", "Benvenuto nel nostro sito, " + request.getUsername() + "!");
+        return appUser;
+
+
     }
 
     public Optional<AppUser> findByUsername(String username) {
