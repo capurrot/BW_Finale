@@ -1,5 +1,6 @@
 package it.epicode.bw.finale.indirizzi;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Comune {
     @JoinColumn(name = "provincia_id")
     private Provincia provincia;
 
-    /*@OneToMany(mappedBy = "comune")
-    private List<Indirizzo> indirizzi = new ArrayList<>();*/
+    @OneToMany(mappedBy = "comune")
+    @JsonIgnore
+    private List<Indirizzo> indirizzi = new ArrayList<>();
 }

@@ -1,9 +1,12 @@
 package it.epicode.bw.finale.indirizzi;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.bw.finale.clienti.Cliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -17,7 +20,7 @@ import lombok.NoArgsConstructor;
         }
 )
 
-
+@EqualsAndHashCode(exclude = "cliente")
 public class Indirizzo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -31,7 +34,10 @@ public class Indirizzo {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonBackReference
+    @JsonIgnore
     private Cliente cliente;
+
 
     @ManyToOne
     @JoinColumn(name="comune_id")

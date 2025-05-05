@@ -1,10 +1,14 @@
 package it.epicode.bw.finale.indirizzi;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class IndirizzoResponse {
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class IndirizzoRequest {
     private String via;
     private String civico;
     private String cap;

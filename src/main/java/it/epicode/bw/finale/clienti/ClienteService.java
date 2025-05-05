@@ -7,12 +7,19 @@ import it.epicode.bw.finale.fatture.Fattura;
 import it.epicode.bw.finale.fatture.FatturaFilterDto;
 import it.epicode.bw.finale.fatture.FatturaResponse;
 import it.epicode.bw.finale.fatture.FatturaSpecification;
+import it.epicode.bw.finale.indirizzi.Comune;
+import it.epicode.bw.finale.indirizzi.ComuneRepository;
+import it.epicode.bw.finale.indirizzi.Indirizzo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,6 +28,9 @@ public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private ComuneRepository  comuneRepository;
 
 
     //RICERCA SINGOLO CLIENTE PER ID
@@ -104,6 +114,27 @@ public class ClienteService {
         cliente.setNomeContatto(clienteRequest.getNomeContatto());
         cliente.setCognomeContatto(clienteRequest.getCognomeContatto());
         cliente.setTipoCliente(clienteRequest.getTipoCliente());
+
+        // Converting indirizzi
+        Set<Indirizzo> indirizzi = clienteRequest.getIndirizzo().stream().map(ir -> {
+            Comune comune = comuneRepository.findById(ir.getComuneId())
+                    .orElseThrow(() -> new NotFoundException("Comune non trovato"));
+
+            Indirizzo indirizzo = new Indirizzo();
+            indirizzo.setVia(ir.getVia());
+            indirizzo.setCivico(ir.getCivico());
+            indirizzo.setCap(ir.getCap());
+            indirizzo.setLocalita(ir.getLocalita());
+            indirizzo.setTipoSede(ir.getTipoSede());
+            indirizzo.setComune(comune);
+            indirizzo.setCliente(cliente); // fondamentale!
+            return indirizzo;
+        }).collect(Collectors.toSet());
+
+        // Aggiungi gli indirizzi
+        cliente.setIndirizzo(indirizzi);
+
+        // Salva il cliente
         return clienteRepository.save(cliente);
     }
 

@@ -2,9 +2,13 @@ package it.epicode.bw.finale.clienti;
 
 
 import it.epicode.bw.finale.enums.TipoCliente;
+import it.epicode.bw.finale.indirizzi.Indirizzo;
+import it.epicode.bw.finale.indirizzi.IndirizzoRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +29,5 @@ public class ClienteRequest {
     private String telefonoContatto;
     private String logoAziendale;
     private TipoCliente tipoCliente;
+    private Set<IndirizzoRequest> indirizzo;
 }
