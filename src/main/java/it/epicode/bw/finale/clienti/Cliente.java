@@ -1,5 +1,6 @@
 package it.epicode.bw.finale.clienti;
 
+import it.epicode.bw.finale.enums.TipoCliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
