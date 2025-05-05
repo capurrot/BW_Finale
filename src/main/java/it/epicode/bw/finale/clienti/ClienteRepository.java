@@ -1,6 +1,9 @@
 package it.epicode.bw.finale.clienti;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
@@ -14,4 +17,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     boolean existsByTelefono(String telefono);
 
     boolean existsByRagioneSociale(String ragioneSociale);
+
+    Page<Cliente> findAll(Specification<Cliente> spec, Pageable pageable);
 }

@@ -2,8 +2,6 @@ package it.epicode.bw.finale.fatture;
 
 import it.epicode.bw.finale.auth.AppUser;
 import it.epicode.bw.finale.auth.Role;
-import it.epicode.bw.finale.filter.FatturaFilterDto;
-import it.epicode.bw.finale.filter.FatturaSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @Validated

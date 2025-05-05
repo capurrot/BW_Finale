@@ -1,9 +1,6 @@
-package it.epicode.bw.finale.filter;
+package it.epicode.bw.finale.clienti;
 
-import it.epicode.bw.finale.clienti.Cliente;
 import org.springframework.data.jpa.domain.Specification;
-
-import java.time.LocalDate;
 
 public class ClienteSpecification {
     public static Specification<Cliente> filterBy(ClienteFilterDto filter) {

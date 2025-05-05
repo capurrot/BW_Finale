@@ -3,7 +3,14 @@ package it.epicode.bw.finale.clienti;
 
 import it.epicode.bw.finale.exceptions.BadRequestException;
 import it.epicode.bw.finale.exceptions.NotFoundException;
+import it.epicode.bw.finale.fatture.Fattura;
+import it.epicode.bw.finale.fatture.FatturaFilterDto;
+import it.epicode.bw.finale.fatture.FatturaResponse;
+import it.epicode.bw.finale.fatture.FatturaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -100,9 +107,33 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
+    public Page<ClienteResponse> filterClienti(ClienteFilterDto filter, Pageable pageable) {
+        Specification<Cliente> spec = ClienteSpecification.filterBy(filter);
+        Page<Cliente> page = clienteRepository.findAll(spec, pageable);
+        return page.map(this::toResponse);
+    }
 
+    public ClienteResponse toResponse(Cliente cliente) {
+        ClienteResponse response = new ClienteResponse();
+        response.setId(cliente.getId());
+        response.setRagioneSociale(cliente.getRagioneSociale());
+        response.setPartitaIva(cliente.getPartitaIva());
+        response.setEmail(cliente.getEmail());
+        response.setDataInserimento(cliente.getDataInserimento());
+        response.setDataUltimoContatto(cliente.getDataUltimoContatto());
+        response.setFatturatoAnnuale(cliente.getFatturatoAnnuale());
+        response.setPec(cliente.getPec());
+        response.setTelefono(cliente.getTelefono());
+        response.setNomeContatto(cliente.getNomeContatto());
+        response.setCognomeContatto(cliente.getCognomeContatto());
+        response.setEmailContatto(cliente.getEmailContatto());
+        response.setTelefonoContatto(cliente.getTelefonoContatto());
+        response.setLogoAziendale(cliente.getLogoAziendale());
+        response.setTipoCliente(cliente.getTipoCliente());
+        return response;
+    }
 
-
-
-
+    public Page<ClienteResponse> findAll(Pageable pageable) {
+        return clienteRepository.findAll(pageable).map(this::toResponse);
+    }
 }
