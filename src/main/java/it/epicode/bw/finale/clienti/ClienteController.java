@@ -19,7 +19,6 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    // ✅ Crea un nuovo cliente
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
@@ -27,21 +26,6 @@ public class ClienteController {
         return clienteService.saveCliente(request);
     }
 
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Page<ClienteResponse> findAll(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id,asc") String[] sort) {
-
-        Sort.Order order = new Sort.Order(Sort.Direction.fromString(sort[1]), sort[0]);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(order));
-
-        return clienteService.findAll(pageable);
-    }
-
-    // ✅ Filtro dinamico dei clienti
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Page<ClienteResponse> filterClienti(
