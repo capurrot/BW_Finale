@@ -1,12 +1,14 @@
 package it.epicode.bw.finale.clienti;
 
 import it.epicode.bw.finale.enums.TipoCliente;
+import it.epicode.bw.finale.indirizzi.Indirizzo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Entity
@@ -48,7 +50,8 @@ public class Cliente {
 
     private String logoAziendale;
 
-    //private Indirizzi indirizzi;
+    @OneToMany(mappedBy = "cliente")
+    private Set<Indirizzo> indirizzo;
 
     @Enumerated(EnumType.STRING)
     private TipoCliente tipoCliente;
