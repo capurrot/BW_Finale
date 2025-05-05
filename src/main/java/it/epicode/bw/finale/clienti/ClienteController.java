@@ -27,8 +27,9 @@ public class ClienteController {
         return clienteService.saveCliente(request);
     }
 
-    // ✅ Ottieni tutti i clienti (paginati e ordinati)
+
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Page<ClienteResponse> findAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
