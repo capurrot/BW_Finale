@@ -1,4 +1,4 @@
-package it.epicode.bw.finale.clienti;
+package it.epicode.bw.finale.exceptions;
 
 public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {

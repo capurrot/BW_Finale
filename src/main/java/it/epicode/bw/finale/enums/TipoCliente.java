@@ -1,4 +1,4 @@
-package it.epicode.bw.finale.clienti;
+package it.epicode.bw.finale.enums;
 
 public enum TipoCliente {
 

@@ -1,5 +1,7 @@
 package it.epicode.bw.finale.clienti;
 
+import it.epicode.bw.finale.enums.TipoCliente;
+
 import java.time.LocalDate;
 
 public class ClienteResponse {

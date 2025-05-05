@@ -1,6 +1,7 @@
 package it.epicode.bw.finale.clienti;
 
 
+import it.epicode.bw.finale.enums.TipoCliente;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
