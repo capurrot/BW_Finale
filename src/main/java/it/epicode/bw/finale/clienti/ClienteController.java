@@ -42,7 +42,7 @@ public class ClienteController {
     }
 
     // ✅ Filtro dinamico dei clienti
-    @GetMapping("/filter")
+    @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Page<ClienteResponse> filterClienti(
             @RequestParam(required = false) Double fatturatoAnnuale,
