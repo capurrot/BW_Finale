@@ -1,7 +1,10 @@
 package it.epicode.bw.finale.filter;
 
-public class FattureSpecification {
-    public static Specification<Fatture> filterBy(FattureFilterDto filter) {
+import it.epicode.bw.finale.fatture.Fattura;
+import org.springframework.data.jpa.domain.Specification;
+
+public class FatturaSpecification {
+    public static Specification<Fattura> filterBy(FatturaFilterDto filter) {
         return (root, query, criteriaBuilder) -> {
             var predicate = criteriaBuilder.conjunction();
 
