@@ -1,5 +1,9 @@
 package it.epicode.bw.finale.auth;
 
+import com.cloudinary.provisioning.Account;
+import com.github.javafaker.Faker;
+import it.epicode.bw.finale.utenti.Utente;
+import it.epicode.bw.finale.utenti.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -17,22 +21,50 @@ public class AuthRunner implements ApplicationRunner {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    UtenteService utenteService;
+    @Autowired
+    AppUserRepository appUserRepository;
+    @Autowired
+    Faker faker;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        /*// Creazione dell'utente admin se non esiste
-        Optional<AppUser> adminUser = appUserService.findByUsername("admin");
-        if (adminUser.isEmpty()) {
-            appUserService.registerUser("admin", "adminpwd", Set.of(Role.ROLE_ADMIN));
+
+        Optional<AppUser> admin = appUserService.findByUsername("admin");
+        if(!admin.isPresent()){
+            AppUser appUser = new AppUser();
+            appUser.setUsername("admin");
+            appUser.setPassword(passwordEncoder.encode("adminpwd"));
+            appUser.setRoles(Set.of(Role.ROLE_ADMIN, Role.ROLE_USER));
+            appUserRepository.save(appUser);
+            Utente utente = new Utente();
+            utente.setAppUser(appUser);
+            utente.setAvatar("https://ui-avatars.com/api/?name=Admin");
+            utente.setId(appUser.getId());
+            utente.setNome("Mauro");
+            utente.setCognome("Larese");
+            utente.setEmail("maurettothebest@gmail.com");
+            utenteService.save(utente);
         }
+        if (appUserRepository.count() <= 1) {
 
-        // Creazione dell'utente user se non esiste
-        Optional<AppUser> normalUser = appUserService.findByUsername("user");
-        if (normalUser.isEmpty()) {
-            appUserService.registerUser("user", "userpwd", Set.of(Role.ROLE_USER));
-        }*/
-
-
+            for (int i = 0; i < 10; i++) {
+                AppUser appUser = new AppUser();
+                appUser.setUsername(faker.name().username());
+                appUser.setPassword(passwordEncoder.encode("userpwd"));
+                appUser.setRoles(Set.of(Role.ROLE_USER));
+                appUserRepository.save(appUser);
+                Utente utente = new Utente();
+                utente.setAppUser(appUser);
+                utente.setId(appUser.getId());
+                utente.setNome(faker.name().firstName());
+                utente.setCognome(faker.name().lastName());
+                utente.setEmail(faker.internet().emailAddress());
+                utente.setAvatar("https://ui-avatars.com/api/?name=" + utente.getNome() + "+" + utente.getCognome());
+                utenteService.save(utente);
+            }
+        }
 
 
     }

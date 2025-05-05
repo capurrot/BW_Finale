@@ -23,4 +23,7 @@ public class UtenteService {
         utente.setAvatar(cloudinaryService.uploadImage(file));
         utenteRepository.save(utente);
     }
+    public Utente save(Utente utente) {
+        return utenteRepository.save(utente);
+    }
 }

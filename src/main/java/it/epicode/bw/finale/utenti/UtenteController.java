@@ -28,11 +28,11 @@ public class UtenteController {
     public List<Utente> getAllUsers() {
         return utenteService.getAllUtenti();
     }
-    @PatchMapping(value = "/{id}/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/upload-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
 
-    public Utente uploadImage(@PathVariable Long id, @RequestPart MultipartFile file) {
-        utenteService.uploadAvatar(id, file);
-        return utenteService.getUtentebyId(id);
+    public Utente uploadImage(@AuthenticationPrincipal AppUser appUser, @RequestPart MultipartFile file) {
+        utenteService.uploadAvatar(appUser.getId(), file);
+        return utenteService.getUtentebyId(appUser.getId());
     }
 }
