@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,7 +54,7 @@ public class AuthRunner implements ApplicationRunner {
                 String nome = faker.name().firstName();
                 String cognome = faker.name().lastName();
                 AppUser appUser = new AppUser();
-                appUser.setUsername(nome + " " + cognome);
+                appUser.setUsername(nome + "." + cognome);
                 appUser.setPassword(passwordEncoder.encode("userpwd"));
                 appUser.setRoles(Set.of(Role.ROLE_USER));
                 appUserRepository.save(appUser);
@@ -62,7 +63,7 @@ public class AuthRunner implements ApplicationRunner {
                 utente.setId(appUser.getId());
                 utente.setNome(nome);
                 utente.setCognome(cognome);
-                utente.setEmail(nome + cognome + "@gmail.com");
+                utente.setEmail((nome + cognome + "@gmail.com").toLowerCase(Locale.ROOT));
                 utente.setAvatar("https://ui-avatars.com/api/?name=" + utente.getNome() + "+" + utente.getCognome());
                 utenteService.save(utente);
             }
