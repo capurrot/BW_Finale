@@ -49,11 +49,12 @@ public class AppUserService {
         appUser.setPassword(passwordEncoder.encode(request.getPassword()));
         appUser.setRoles(roles);
 
-        Utente dipendente = new Utente();
-        BeanUtils.copyProperties(request, dipendente);
-
-        dipendente.setAppUser(appUser);
-        utenteRepository.save(dipendente);
+        Utente utente = new Utente();
+        BeanUtils.copyProperties(request, utente);
+        utente.setAppUser(appUser);
+        utente.setAvatar("https://ui-avatars.com/api/?name=" + request.getNome() + "+" + request.getCognome());
+        utente.setId(appUser.getId());
+        utenteRepository.save(utente);
         emailSenderService.sendEmail(request.getEmail(), "Benvenuto", "Benvenuto nel nostro sito, " + request.getUsername() + "!");
         return appUser;
 

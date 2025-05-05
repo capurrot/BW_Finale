@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 
 public class Utente {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String email;
     private String nome;
