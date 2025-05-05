@@ -20,7 +20,7 @@ public class ClienteController {
     private final ClienteService clienteService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente createCliente(@RequestBody @Valid ClienteRequest request) {
         return clienteService.saveCliente(request);
