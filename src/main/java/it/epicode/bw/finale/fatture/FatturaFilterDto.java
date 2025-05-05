@@ -1,4 +1,4 @@
-package it.epicode.bw.finale.filter;
+package it.epicode.bw.finale.fatture;
 
 import lombok.Data;
 

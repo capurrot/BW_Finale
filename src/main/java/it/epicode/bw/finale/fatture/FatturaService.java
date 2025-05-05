@@ -8,9 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @Validated
@@ -86,4 +86,11 @@ public class FatturaService {
         }
 
     }
+
+    public Page<FatturaResponse> filterFatture(FatturaFilterDto filter, Pageable pageable) {
+        Specification<Fattura> spec = FatturaSpecification.filterBy(filter);
+        Page<Fattura> page = fatturaRepository.findAll(spec, pageable);
+        return page.map(this::toDTO);
+    }
+
 }

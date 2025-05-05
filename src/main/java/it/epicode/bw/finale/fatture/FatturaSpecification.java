@@ -1,6 +1,5 @@
-package it.epicode.bw.finale.filter;
+package it.epicode.bw.finale.fatture;
 
-import it.epicode.bw.finale.fatture.Fattura;
 import org.springframework.data.jpa.domain.Specification;
 
 public class FatturaSpecification {
