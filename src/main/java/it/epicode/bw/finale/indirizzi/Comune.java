@@ -23,6 +23,6 @@ public class Comune {
     @JoinColumn(name = "provincia_id")
     private Provincia provincia;
 
-    @OneToMany(mappedBy = "comune")
-    private List<Indirizzo> indirizzi = new ArrayList<>();
+    /*@OneToMany(mappedBy = "comune")
+    private List<Indirizzo> indirizzi = new ArrayList<>();*/
 }
