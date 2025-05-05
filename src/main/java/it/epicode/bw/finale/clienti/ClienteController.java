@@ -27,7 +27,7 @@ public class ClienteController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Page<ClienteResponse> filterClienti(
             @RequestParam(required = false) Double fatturatoAnnuale,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInserimento,
