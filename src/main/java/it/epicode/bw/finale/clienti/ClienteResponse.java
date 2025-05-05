@@ -1,9 +1,11 @@
 package it.epicode.bw.finale.clienti;
 
 import it.epicode.bw.finale.enums.TipoCliente;
+import it.epicode.bw.finale.indirizzi.Indirizzo;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 public class ClienteResponse {
@@ -23,5 +25,6 @@ public class ClienteResponse {
     private String telefonoContatto;
     private String logoAziendale;
     private TipoCliente tipoCliente;
+    private Set<Indirizzo> indirizzo;
 
 }
