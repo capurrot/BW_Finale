@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class FattureFilterDto {
+public class FatturaFilterDto {
     private Long idCliente;
     private LocalDate data;
     private LocalDate anno;
