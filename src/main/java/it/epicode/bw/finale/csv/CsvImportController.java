@@ -14,7 +14,7 @@ public class CsvImportController {
     @GetMapping("/importa-csv")
     public String importaCsv() {
         try {
-            csvImportService.importComuniAndProvince("src/main/resources/comuni.csv", "src/main/resources/province.csv");
+            csvImportService.importComuniAndProvince("src/main/java/it/epicode/bw/finale/csv/comuni-italiani.csv", "src/main/java/it/epicode/bw/finale/csv/province-italiane.csv");
             return "Importazione completata!";
         } catch (Exception e) {
             return "Errore durante l'importazione: " + e.getMessage();
