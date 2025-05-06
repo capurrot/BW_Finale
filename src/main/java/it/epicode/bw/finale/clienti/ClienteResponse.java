@@ -6,6 +6,7 @@ import it.epicode.bw.finale.indirizzi.IndirizzoResponse;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -26,5 +27,5 @@ public class ClienteResponse {
     private String telefonoContatto;
     private String logoAziendale;
     private TipoCliente tipoCliente;
-    private Set<IndirizzoResponse> indirizzo;
+    private Set<IndirizzoResponse> indirizzo = new HashSet<>();
 }

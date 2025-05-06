@@ -10,6 +10,7 @@ import it.epicode.bw.finale.fatture.FatturaSpecification;
 import it.epicode.bw.finale.indirizzi.Comune;
 import it.epicode.bw.finale.indirizzi.ComuneRepository;
 import it.epicode.bw.finale.indirizzi.Indirizzo;
+import it.epicode.bw.finale.indirizzi.IndirizzoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -161,8 +162,38 @@ public class ClienteService {
         response.setTelefonoContatto(cliente.getTelefonoContatto());
         response.setLogoAziendale(cliente.getLogoAziendale());
         response.setTipoCliente(cliente.getTipoCliente());
+
+        // Mappa gli indirizzi se presenti
+        if (cliente.getIndirizzo() != null) {
+            Set<IndirizzoResponse> indirizzi = cliente.getIndirizzo().stream()
+                    .map(this::toIndirizzoResponse) // Metodo helper sotto
+                    .collect(Collectors.toSet());
+            response.setIndirizzo(indirizzi);
+        }
+
         return response;
     }
+
+    private IndirizzoResponse toIndirizzoResponse(Indirizzo indirizzo) {
+        IndirizzoResponse response = new IndirizzoResponse();
+        response.setId(indirizzo.getId());
+        response.setVia(indirizzo.getVia());
+        response.setCivico(indirizzo.getCivico());
+        response.setCap(indirizzo.getCap());
+        response.setLocalita(indirizzo.getLocalita());
+        response.setTipoSede(indirizzo.getTipoSede());
+
+        if (indirizzo.getComune() != null) {
+            response.setComuneId(indirizzo.getComune().getId());
+        }
+
+        if (indirizzo.getCliente() != null) {
+            response.setClienteId(indirizzo.getCliente().getId());
+        }
+
+        return response;
+    }
+
 
     public Page<ClienteResponse> findAll(Pageable pageable) {
         return clienteRepository.findAll(pageable).map(this::toResponse);
