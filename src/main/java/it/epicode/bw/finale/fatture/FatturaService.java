@@ -4,6 +4,7 @@ import it.epicode.bw.finale.auth.AppUser;
 import it.epicode.bw.finale.auth.Role;
 import it.epicode.bw.finale.clienti.ClienteRepository;
 import it.epicode.bw.finale.clienti.ClienteService;
+import it.epicode.bw.finale.fatture.stati.StatoFatturaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Optional;
 
 @Service
 @Validated
@@ -28,7 +31,11 @@ public class FatturaService {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private StatoFatturaService statoFatturaService;
+
     //inserire anche clienteRepository una volta fatta
+
 
     private Fattura toEntity(FatturaRequest request){
         Fattura fattura = new Fattura();
@@ -36,7 +43,14 @@ public class FatturaService {
         fattura.setNumero(request.getNumero());
         fattura.setImporto(request.getImporto());
         fattura.setCliente(clienteRepository.findById(request.getClienteId()).orElseThrow());
-        fattura.setStato(request.getStato());
+
+        //impostare stato fattura se null in non pagata passata in stringa
+        if(request.getStato()==null){
+            fattura.setStato(statoFatturaService.findStatoFatturaByNome("non pagata"));
+        }else{
+            fattura.setStato(statoFatturaService.findStatoFatturaByNome(request.getStato()));
+        }
+
         return fattura;
     }
 
@@ -76,7 +90,7 @@ public class FatturaService {
         fattura.setData(request.getData());
         fattura.setImporto(request.getImporto());
         fattura.setNumero(request.getNumero());
-        fattura.setStato(request.getStato());
+        fattura.setStato(statoFatturaService.findStatoFatturaByNome(request.getStato()));
         fattura = fatturaRepository.save(fattura);
         return toDTO(fattura);
         }

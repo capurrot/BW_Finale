@@ -1,6 +1,8 @@
 package it.epicode.bw.finale.fatture;
 
 import it.epicode.bw.finale.clienti.Cliente;
+import it.epicode.bw.finale.fatture.stati.StatoFattura;
+import it.epicode.bw.finale.fatture.stati.StatoFatturaRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +32,7 @@ public class Fattura {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne @JoinColumn(name ="stato", nullable = false)
     private StatoFattura stato;
 
 }

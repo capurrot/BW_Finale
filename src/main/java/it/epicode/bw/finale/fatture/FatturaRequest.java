@@ -1,5 +1,6 @@
 package it.epicode.bw.finale.fatture;
 
+import it.epicode.bw.finale.fatture.stati.StatoFattura;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -29,5 +30,5 @@ public class FatturaRequest {
     private Long clienteId;
 
     @NotNull(message = "Lo stato è obbligatorio")
-    private StatoFattura stato;
+    private String stato ;
 }
