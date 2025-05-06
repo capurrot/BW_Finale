@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProvinciaResponse {
-    private Long id;
+public class ComuneRequest {
     private String nome;
-    private String sigla;
+    private Long provinciaId;
 }
