@@ -95,21 +95,28 @@ public class IndirizzoService {
     }
 
     private IndirizzoResponse toDTO(Indirizzo indirizzo) {
-        Long clienteId = null;
-        if (indirizzo.getCliente() != null) {
-            clienteId = indirizzo.getCliente().getId();  // Solo se cliente non è null
-        }
+        Long clienteId = indirizzo.getCliente() != null ? indirizzo.getCliente().getId() : null;
+        Long comuneId = indirizzo.getComune() != null ? indirizzo.getComune().getId() : null;
 
-        return new IndirizzoResponse(
-                indirizzo.getId(),
-                indirizzo.getVia(),
-                indirizzo.getCivico(),
-                indirizzo.getCap(),
-                indirizzo.getLocalita(),
-                indirizzo.getTipoSede(),
-                indirizzo.getComune().getId(),
-                clienteId  // Passa clienteId che potrebbe essere null
-        );
+        Provincia provincia = indirizzo.getComune().getProvincia();
+
+        Long provinciaId = provincia != null ? provincia.getId() : null;
+        String provinciaNome = provincia != null ? provincia.getNome() : null;
+
+        IndirizzoResponse response = new IndirizzoResponse();
+        response.setId(indirizzo.getId());
+        response.setVia(indirizzo.getVia());
+        response.setCivico(indirizzo.getCivico());
+        response.setCap(indirizzo.getCap());
+        response.setLocalita(indirizzo.getLocalita());
+        response.setTipoSede(indirizzo.getTipoSede());
+        response.setComuneId(comuneId);
+        response.setClienteId(clienteId);
+        response.setProvinciaId(provinciaId);
+        response.setProvinciaNome(provinciaNome);
+
+        return response;
     }
+
 
 }

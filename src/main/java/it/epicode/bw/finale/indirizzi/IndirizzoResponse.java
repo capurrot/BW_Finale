@@ -16,4 +16,7 @@ public class IndirizzoResponse {
     private TipoSede tipoSede;
     private Long comuneId;
     private Long clienteId;
+    private Long provinciaId;
+    private String provinciaNome;
+
 }

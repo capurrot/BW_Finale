@@ -7,10 +7,7 @@ import it.epicode.bw.finale.fatture.Fattura;
 import it.epicode.bw.finale.fatture.FatturaFilterDto;
 import it.epicode.bw.finale.fatture.FatturaResponse;
 import it.epicode.bw.finale.fatture.FatturaSpecification;
-import it.epicode.bw.finale.indirizzi.Comune;
-import it.epicode.bw.finale.indirizzi.ComuneRepository;
-import it.epicode.bw.finale.indirizzi.Indirizzo;
-import it.epicode.bw.finale.indirizzi.IndirizzoResponse;
+import it.epicode.bw.finale.indirizzi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -185,6 +182,12 @@ public class ClienteService {
 
         if (indirizzo.getComune() != null) {
             response.setComuneId(indirizzo.getComune().getId());
+
+            Provincia provincia = indirizzo.getComune().getProvincia();
+            if (provincia != null) {
+                response.setProvinciaId(provincia.getId());
+                response.setProvinciaNome(provincia.getNome());
+            }
         }
 
         if (indirizzo.getCliente() != null) {
@@ -193,6 +196,7 @@ public class ClienteService {
 
         return response;
     }
+
 
 
     public Page<ClienteResponse> findAll(Pageable pageable) {
