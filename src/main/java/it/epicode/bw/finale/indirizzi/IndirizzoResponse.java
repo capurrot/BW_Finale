@@ -1,8 +1,12 @@
 package it.epicode.bw.finale.indirizzi;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class IndirizzoResponse {
     private Long id;
     private String via;
@@ -11,4 +15,5 @@ public class IndirizzoResponse {
     private String localita;
     private TipoSede tipoSede;
     private Long comuneId;
+    private Long clienteId;
 }

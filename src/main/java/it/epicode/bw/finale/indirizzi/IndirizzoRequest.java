@@ -15,4 +15,5 @@ public class IndirizzoRequest {
     private String localita;
     private TipoSede tipoSede;
     private Long comuneId;
+    private Long clienteId;
 }
