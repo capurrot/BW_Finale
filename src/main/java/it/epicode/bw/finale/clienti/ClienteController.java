@@ -42,11 +42,20 @@ public class ClienteController {
         filtro.setDataInserimento(dataInserimento);
         filtro.setDataUltimoContatto(dataUltimoContatto);
         filtro.setNomeParziale(nomeParziale);
+        if (sort[0].equals("prov")) {
+            if (sort[1].equals("asc")) {
+                Pageable pageable = PageRequest.of(page, size, Sort.by("indirizzo.comune.provincia.nome").ascending());
+                return clienteService.filterClienti(filtro, pageable);
+            } else {
+                Pageable pageable = PageRequest.of(page, size, Sort.by("indirizzo.comune.provincia.nome").descending());
+                return clienteService.filterClienti(filtro, pageable);
+            }
 
-        Sort.Order order = new Sort.Order(Sort.Direction.fromString(sort[1]), sort[0]);
-        Pageable pageable = PageRequest.of(page, size, Sort.by(order));
-
-        return clienteService.filterClienti(filtro, pageable);
+        } else {
+            Sort.Order order = new Sort.Order(Sort.Direction.fromString(sort[1]), sort[0]);
+            Pageable pageable = PageRequest.of(page, size, Sort.by(order));
+            return clienteService.filterClienti(filtro, pageable);
+        }
     }
 
     @GetMapping("/{id}")
