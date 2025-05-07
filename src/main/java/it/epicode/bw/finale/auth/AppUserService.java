@@ -53,6 +53,7 @@ public class AppUserService {
         BeanUtils.copyProperties(request, utente);
         utente.setAppUser(appUser);
         utente.setAvatar("https://ui-avatars.com/api/?name=" + request.getNome() + "+" + request.getCognome());
+        appUserRepository.save(appUser);
         utente.setId(appUser.getId());
         utenteRepository.save(utente);
         emailSenderService.sendEmail(request.getEmail(), "Benvenuto", "Benvenuto nel nostro sito, " + request.getUsername() + "!");
