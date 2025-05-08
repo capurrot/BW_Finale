@@ -54,7 +54,7 @@ public class AuthRunner implements ApplicationRunner {
                 String nome = faker.name().firstName();
                 String cognome = faker.name().lastName();
                 AppUser appUser = new AppUser();
-                appUser.setUsername(nome + "." + cognome);
+                appUser.setUsername((nome + "." + cognome).toLowerCase(Locale.ROOT));
                 appUser.setPassword(passwordEncoder.encode("userpwd"));
                 appUser.setRoles(Set.of(Role.ROLE_USER));
                 appUserRepository.save(appUser);

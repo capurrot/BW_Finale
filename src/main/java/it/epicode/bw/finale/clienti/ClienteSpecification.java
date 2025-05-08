@@ -20,7 +20,12 @@ public class ClienteSpecification {
             }
 
             if (filter.getNomeParziale() != null) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("ragioneSociale"), "%" + filter.getNomeParziale() + "%"));
+                predicate = criteriaBuilder.and(predicate,
+                        criteriaBuilder.like(
+                                criteriaBuilder.lower(root.get("ragioneSociale")),
+                                "%" + filter.getNomeParziale().toLowerCase() + "%"
+                        )
+                );
             }
             return predicate;
         };
