@@ -2,11 +2,8 @@ package it.epicode.bw.finale;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.epicode.bw.finale.auth.*;
-import it.epicode.bw.finale.indirizzi.ComuneRequest;
-import it.epicode.bw.finale.indirizzi.ComuneResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -18,7 +15,6 @@ import java.util.Set;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestDatabase
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class AuthControllerTest {
 
@@ -39,7 +35,7 @@ public class AuthControllerTest {
 
     private static String tokenNormale;
     private static String tokenAdmin;
-    private static Long comuneCreatoId;
+
 
     @Test
     @Order(1)
