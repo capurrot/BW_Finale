@@ -48,6 +48,9 @@ public class ClienteControllerTest {
     private static String tokenAdmin;
 
 
+    // creazione non funziona perchè c'è un problema quando inserisci indirizzo in cliente (indirizzo ha clienteid che ancora non esiste se non posso dargli indirizzo)
+
+
     @Test
     @Order(1)
     @DisplayName("Test di registrazione admin")
