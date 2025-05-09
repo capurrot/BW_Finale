@@ -8,7 +8,7 @@ import java.time.LocalDate;
 public class FatturaFilterDto {
     private Long idCliente;
     private LocalDate data;
-    private LocalDate anno;
+    private Integer anno;
     private Double importoDa;
     private Double importoA;
 }

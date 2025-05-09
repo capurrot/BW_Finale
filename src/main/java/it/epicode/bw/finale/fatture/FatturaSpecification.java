@@ -2,6 +2,8 @@ package it.epicode.bw.finale.fatture;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
+
 public class FatturaSpecification {
     public static Specification<Fattura> filterBy(FatturaFilterDto filter) {
         return (root, query, criteriaBuilder) -> {
@@ -16,7 +18,9 @@ public class FatturaSpecification {
             }
 
             if (filter.getAnno() != null) {
-                predicate = criteriaBuilder.and(predicate, criteriaBuilder.equal(criteriaBuilder.function("YEAR", Integer.class, root.get("data")), filter.getAnno().getYear()));
+                LocalDate startOfYear = LocalDate.of(filter.getAnno(), 1, 1);
+                LocalDate endOfYear = LocalDate.of(filter.getAnno(), 12, 31);
+                predicate = criteriaBuilder.and(predicate, criteriaBuilder.between(root.get("data"), startOfYear, endOfYear));
             }
 
             if (filter.getImportoDa() != null) {
