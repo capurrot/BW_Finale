@@ -2,9 +2,14 @@ package it.epicode.bw.finale.clienti;
 
 import com.github.javafaker.Faker;
 import it.epicode.bw.finale.enums.TipoCliente;
+import it.epicode.bw.finale.fatture.Fattura;
+import it.epicode.bw.finale.fatture.FatturaRepository;
+import it.epicode.bw.finale.fatture.stati.StatoFattura;
+import it.epicode.bw.finale.fatture.stati.StatoFatturaRepository;
 import it.epicode.bw.finale.indirizzi.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Component
+@Order(3)
 public class ClienteRunner implements CommandLineRunner {
 
     @Autowired
@@ -28,6 +34,12 @@ public class ClienteRunner implements CommandLineRunner {
 
     @Autowired
     IndirizzoRepository indirizzoRepository;
+
+    @Autowired
+    FatturaRepository fatturaRepository;
+
+    @Autowired
+    StatoFatturaRepository statoFatturaRepository;
 
     @Override
     @Transactional
@@ -84,6 +96,18 @@ public class ClienteRunner implements CommandLineRunner {
 
             // Salva il cliente
             clienteRepository.save(cliente);
+
+            // Creo 10 fatture per cliente
+            for (int j = 0; j < 10; j++) {
+                Fattura fattura = new Fattura();
+                fattura.setData(LocalDate.now());
+                fattura.setImporto(faker.number().randomDouble(2, 100, 1000));
+                fattura.setStato(statoFatturaRepository.findByNome(faker.options().option("PAGATA", "NON PAGATA", "IN ATTESA")).orElseThrow());
+                fattura.setNumero(faker.number().numberBetween(1, 1000));
+                fattura.setCliente(cliente);
+                fatturaRepository.save(fattura);
+            }
         }
+
     }
 }
